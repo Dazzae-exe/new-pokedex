@@ -1,27 +1,35 @@
-import {
-  NavigationMenu,
-  NavigationMenuItem,
-  NavigationMenuLink,
-  NavigationMenuList,
-} from "@/components/ui/navigation-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
 
-export default function Navbar() {
+const Navbar = () => {
   return (
-    <header className="w-full bg-red-500 text-neutral-50 p-4 fixed top-0 z-50">
-      <NavigationMenu className="w-full mx-auto">
-        <NavigationMenuList>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-                  <a href="/">Home</a>
-              </NavigationMenuLink>
-          </NavigationMenuItem>
-          <NavigationMenuItem>
-            <NavigationMenuLink asChild>
-                  <a href="/pokedex">Pokedex</a>
-              </NavigationMenuLink>
-          </NavigationMenuItem>
-        </NavigationMenuList>
-      </NavigationMenu>
-    </header>
+    <nav className="fixed top-6 inset-x-4 h-16 bg-background border dark:border-slate-700/70 max-w-screen-xl mx-auto rounded-full">
+        <div className="h-full flex items-center justify-between mx-auto px-4">
+          <div className="flex items-center gap-2 md:gap-6">
+            <span className="text-2xl">Pokedex</span>
+
+            <div className="relative hidden md:block">
+              <Search className="h-5 w-5 absolute inset-y-0 my-auto left-2.5" />
+              <Input
+                className="pl-10 flex-1 bg-neutral-100/70 dark:bg-slate-800 border-none shadow-none w-[280px] rounded-full"
+                placeholder="Search"
+              />
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2">
+            <Button
+              size="icon"
+              className="bg-muted text-foreground hover:bg-accent shadow-none md:hidden rounded-full"
+            >
+              <Search className="!h-5 !w-5" />
+            </Button>
+            <Button className="rounded-full">Get Started</Button>
+          </div>
+        </div>
+      </nav>
   );
-}
+};
+
+export default Navbar;
