@@ -1,28 +1,27 @@
+import React from "react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
   CardAction,
   CardContent,
-  CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
 import useFetch from "@/hooks/useFetch";
-import type React from "react";
 import { Link } from "react-router";
+import type { Pokedex } from "@/lib/interfaces/Pokedex";
 
 export default function PokedexPage(): React.ReactNode {
-  const pokedex = useFetch("https://pokeapi.co/api/v2/pokedex/1");
+  const pokedex = useFetch<Pokedex>("https://pokeapi.co/api/v2/pokedex/1");
 
   return (
-    <section className="p-5 w-full min-h-screen flex flex-col items-center justify-center mt-20">
+    <section className="p-5 w-full min-h-screen flex flex-col items-center justify-center mt-24">
       {pokedex.loading && <p>Loading...</p>}
       {pokedex.error && <p>Error: {pokedex.error}</p>}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 w-full place-items-center">
-        {pokedex.data?.pokemon_entries?.map((pokemon: any) => (
+        {pokedex.data?.pokemon_entries?.map((pokemon) => (
           <Card
-            className="w-full max-w-md bg-neutral-50 text-neutral-950"
+            className="w-full max-w-md bg-neutral-100 text-foreground"
             key={pokemon.entry_number}
           >
             <CardHeader>
@@ -32,7 +31,7 @@ export default function PokedexPage(): React.ReactNode {
               <CardAction>
                 <Button asChild variant="link" className="w-full">
                     <Link to={`/pokemon/${pokemon.entry_number}`}>
-                      View Details
+                      Details
                     </Link>
                 </Button>
               </CardAction>
@@ -43,7 +42,7 @@ export default function PokedexPage(): React.ReactNode {
                         <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon?.entry_number}.png`}
                         alt="Pokemon Sprite"
-                        className="w-24 h-24 mx-auto"
+                        className="w-36 h-36 mx-auto"
                         loading="lazy"
                         />
                         <figcaption className="text-center text-sm font-light text-neutral-600">
@@ -54,7 +53,7 @@ export default function PokedexPage(): React.ReactNode {
                         <img
                         src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/shiny/${pokemon?.entry_number}.png`}
                         alt="Pokemon Sprite"
-                        className="w-24 h-24 mx-auto"
+                        className="w-36 h-36 mx-auto"
                         loading="lazy"
                         />
                         <figcaption className="text-center text-sm font-light text-neutral-600">
@@ -63,15 +62,6 @@ export default function PokedexPage(): React.ReactNode {
                     </figure>
                 </div>
             </CardContent>
-            <CardFooter>
-              <CardAction className="w-full">
-                <CardDescription className="text-center">
-                  <p className="text-sm text-neutral-600">
-                    Entry Number: {pokemon.entry_number}
-                  </p>
-                </CardDescription>
-              </CardAction>
-            </CardFooter>
           </Card>
         ))}
       </div>
